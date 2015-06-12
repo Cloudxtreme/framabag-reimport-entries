@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+// app/console
+
+use Symfony\Component\Console\Application;
+
+include(__DIR__ . '/vendor/autoload.php');

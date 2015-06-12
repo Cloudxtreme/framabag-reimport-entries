@@ -1,0 +1,20 @@
+{
+    "name": "wallabag/reimport",
+    "description": "A tool to reimport empty entries",
+    "authors": [
+        {
+            "name": "Nicolas Lœuillet",
+            "email": "nicolas@loeuillet.org"
+        }
+    ],
+    "require": {
+        "symfony/config": "~2.7",
+        "symfony/console": "~2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~4.6"
+    },
+    "autoload": {
+        "psr-4": { "Wallabag\\Reimport\\": "" }
+    }
+}
