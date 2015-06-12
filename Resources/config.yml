@@ -1,0 +1,5 @@
+reimport:
+    clean-all:
+        folder: 'u'
+    clean:
+        folder: '/tmp'
