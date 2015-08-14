@@ -15,9 +15,9 @@ class CleanCommand extends Command
     protected function configure()
     {
         $this
-            ->setName("clean")
-            ->setDescription("Clean entries")
-            ->addArgument("username", InputArgument::REQUIRED, "Username")
+            ->setName('clean')
+            ->setDescription('Clean entries')
+            ->addArgument('username', InputArgument::REQUIRED, 'Username')
         ;
     }
 
@@ -39,8 +39,7 @@ class CleanCommand extends Command
 
         $reimport = new Reimport($input->getArgument('username'));
 
-        foreach ($results as $result)
-        {
+        foreach ($results as $result) {
             $reimport->run($result['url']);
             $progress->advance();
         }

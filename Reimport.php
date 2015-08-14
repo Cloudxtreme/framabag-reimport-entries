@@ -19,10 +19,9 @@ class Reimport
     public function run($url)
     {
         $content = Extractor::extract($url);
-        if ($content->getBody() <> '' && $content->getBody() <> '[unable to retrieve full-text content]') {
+        if ($content->getBody() != '' && $content->getBody() != '[unable to retrieve full-text content]') {
             // Update database
-        }
-        else {
+        } else {
             // store this URL for debug
         }
     }
