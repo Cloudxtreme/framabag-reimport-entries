@@ -4,6 +4,7 @@
 // app/console
 
 use Wallabag\Reimport\Console\CleanCommand;
+use Wallabag\Reimport\Console\CleanAllCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -11,4 +12,5 @@ include(__DIR__ . '/vendor/autoload.php');
 
 $application = new Application();
 $application->add(new CleanCommand());
+$application->add(new CleanAllCommand());
 $application->run();

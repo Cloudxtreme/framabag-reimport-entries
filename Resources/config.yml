@@ -1,5 +1,3 @@
 reimport:
-    clean-all:
-        folder: 'u'
     clean:
-        folder: '/tmp/u/nicosomb'
+        folder: '/tmp/u'

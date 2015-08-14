@@ -26,20 +26,24 @@ class CleanCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $username = $input->getArgument('username');
+
         $locator = new FileLocator(array(__DIR__.'/../Resources'));
         $config = $locator->locate('config.yml');
         $configValues = Yaml::parse(file_get_contents($config));
 
-        $db = new Database($configValues['reimport']['clean']['folder']);
+        $db = new Database($configValues['reimport']['clean']['folder'].'/'.$username.'/db/poche.sqlite');
 
         $query = $db->getPdo()->prepare("SELECT * from `entries` WHERE `content` = '' OR `content` = '[unable to retrieve full-text content]';");
         $query->execute();
         $results = $query->fetchAll();
 
-        $progress = $this->getHelperSet()->get('progress');
-        $progress->start($output, count($results));
+        if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+            $progress = $this->getHelperSet()->get('progress');
+            $progress->start($output, count($results));
+        }
 
-        $reimport = new Reimport($input->getArgument('username'));
+        $reimport = new Reimport($username);
 
         foreach ($results as $result) {
             $run = $reimport->run($result['url']);
@@ -50,10 +54,12 @@ class CleanCommand extends Command
                 $query = $db->getPdo()->prepare($sql);
                 $query->execute($params);
             }
-
-            $progress->advance();
+            if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+                $progress->advance();
+            }
         }
-
-        $progress->finish();
+        if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+            $progress->finish();
+        }
     }
 }

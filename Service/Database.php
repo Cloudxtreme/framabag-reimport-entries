@@ -8,7 +8,7 @@ class Database
 
     public function __construct($path)
     {
-        $this->pdo = new \PDO('sqlite:'.$path.'/poche.sqlite');
+        $this->pdo = new \PDO('sqlite:'.$path);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 

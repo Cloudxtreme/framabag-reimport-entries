@@ -25,7 +25,7 @@ final class Extractor
     }
 
     /**
-     * Returns new purifier object with actual config
+     * Returns new purifier object with actual config.
      */
     private static function getPurifier()
     {
@@ -34,6 +34,7 @@ final class Extractor
         $config->set('HTML.SafeIframe', true);
         //allow YouTube, Vimeo and dailymotion videos
         $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/|www\.dailymotion\.com/embed/video/)%');
+
         return new \HTMLPurifier($config);
     }
 

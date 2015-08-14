@@ -18,10 +18,12 @@ class Reimport
     public function __construct($username)
     {
         $this->username = $username;
-        $this->logger = new Logger('reimport-' . $username);
-        $this->logger->pushHandler(new StreamHandler('logs/reimport-'.$username.'.log', Logger::DEBUG));
 
-        $this->logger->addInfo('Starting reimport');
+        $date = new \DateTime();
+        $this->logger = new Logger('clean-'.$username);
+        $this->logger->pushHandler(new StreamHandler('logs/users/'.$username.'-'.$date->format('Ymd-Hi').'.log', Logger::DEBUG));
+
+        $this->logger->addInfo('Starting cleaning');
     }
 
     public function run($url)
@@ -31,6 +33,7 @@ class Reimport
         if ($content->getBody() != '' && $content->getBody() != '[unable to retrieve full-text content]') {
             // Update database
             $this->logger->addInfo('URL updated with success', $debugParams);
+
             return $content;
         } else {
             if ($content->getBody() == '') {
