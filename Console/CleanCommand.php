@@ -49,8 +49,8 @@ class CleanCommand extends Command
             $run = $reimport->run($result['url']);
 
             if ($run !== false) {
-                $sql = 'UPDATE entries SET content=? WHERE id=?';
-                $params = array($run->getBody(), $result['id']);
+                $sql = 'UPDATE entries SET content=?, title=? WHERE id=?';
+                $params = array($run->getBody(), $run->getTitle(), $result['id']);
                 $query = $db->getPdo()->prepare($sql);
                 $query->execute($params);
             }
