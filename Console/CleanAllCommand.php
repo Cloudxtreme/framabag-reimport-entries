@@ -44,7 +44,7 @@ class CleanAllCommand extends Command
         foreach ($finder->directories() as $directory) {
             $arguments = array(
                     'command' => 'clean',
-                    'username'    => $directory->getRelativePathname()
+                    'username' => $directory->getRelativePathname(),
             );
 
             $input = new ArrayInput($arguments);
