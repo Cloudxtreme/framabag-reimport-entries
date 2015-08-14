@@ -11,15 +11,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 
-class CleanCommand extends Command
+class CleanAllCommand extends Command
 {
     private $database;
 
     protected function configure()
     {
         $this
-            ->setName('clean')
-            ->setDescription('Clean entries for a single user')
+            ->setName('clean-all')
+            ->setDescription('Clean entries for all users')
             ->addArgument('username', InputArgument::REQUIRED, 'Username')
         ;
     }
@@ -44,12 +44,10 @@ class CleanCommand extends Command
         foreach ($results as $result) {
             $run = $reimport->run($result['url']);
 
-            if ($run !== false) {
-                $sql = 'UPDATE entries SET content=? WHERE id=?';
-                $params = array($run->getBody(), $result['id']);
-                $query = $db->getPdo()->prepare($sql);
-                $query->execute($params);
-            }
+            $sql = 'UPDATE entries SET content=? WHERE id=?';
+            $params = array($run->getBody(), $result['id']);
+            $query = $db->getPdo()->prepare($sql);
+            $query->execute($params);
 
             $progress->advance();
         }

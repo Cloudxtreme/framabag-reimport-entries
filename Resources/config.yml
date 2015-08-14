@@ -2,4 +2,4 @@ reimport:
     clean-all:
         folder: 'u'
     clean:
-        folder: '/tmp'
+        folder: '/tmp/u/nicosomb'

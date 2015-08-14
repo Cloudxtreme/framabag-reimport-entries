@@ -13,11 +13,28 @@ final class Extractor
         $title = $pageContent['rss']['channel']['item']['title'] ?: 'Untitled';
         $body = $pageContent['rss']['channel']['item']['description'];
 
+        $purifier = self::getPurifier();
+        $title = $purifier->purify($title);
+        $body = $purifier->purify($body);
+
         $content = new Content();
         $content->setTitle($title);
         $content->setBody($body);
 
         return $content;
+    }
+
+    /**
+     * Returns new purifier object with actual config
+     */
+    private static function getPurifier()
+    {
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', 'cache');
+        $config->set('HTML.SafeIframe', true);
+        //allow YouTube, Vimeo and dailymotion videos
+        $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/|www\.dailymotion\.com/embed/video/)%');
+        return new \HTMLPurifier($config);
     }
 
     /**
@@ -27,7 +44,7 @@ final class Extractor
      *
      * @return mixed
      */
-    public static function getPageContent(Url $url)
+    private static function getPageContent(Url $url)
     {
         // Saving and clearing context
         $REAL = array();

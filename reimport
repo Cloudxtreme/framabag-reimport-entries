@@ -5,6 +5,7 @@
 
 use Wallabag\Reimport\Console\CleanCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 include(__DIR__ . '/vendor/autoload.php');
 
