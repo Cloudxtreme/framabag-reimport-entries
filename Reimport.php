@@ -2,9 +2,9 @@
 
 namespace Wallabag\Reimport;
 
-use Wallabag\Reimport\Service\Extractor;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Graby\Graby;
 
 class Reimport
 {
@@ -28,15 +28,17 @@ class Reimport
 
     public function run($url)
     {
-        $content = Extractor::extract($url);
+        $graby = new Graby();
+        $result = $graby->fetchContent($url);
+
         $debugParams = array('url' => $url);
-        if ($content->getBody() != '' && $content->getBody() != '[unable to retrieve full-text content]') {
+        if ($result['status'] != '404' && $result['html'] != '' && $result['html'] != '[unable to retrieve full-text content]') {
             // Update database
             $this->logger->addInfo('URL updated with success', $debugParams);
 
-            return $content;
+            return $result;
         } else {
-            if ($content->getBody() == '') {
+            if ($result['html'] == '') {
                 $this->logger->addWarning('URL empty', $debugParams);
             } else {
                 $this->logger->addWarning('Unable to retrieve content', $debugParams);

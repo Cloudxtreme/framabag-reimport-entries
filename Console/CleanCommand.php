@@ -50,7 +50,7 @@ class CleanCommand extends Command
 
             if ($run !== false) {
                 $sql = 'UPDATE entries SET content=?, title=? WHERE id=?';
-                $params = array($run->getBody(), $run->getTitle(), $result['id']);
+                $params = array($run['html'], $run['title'], $result['id']);
                 $query = $db->getPdo()->prepare($sql);
                 $query->execute($params);
             }
